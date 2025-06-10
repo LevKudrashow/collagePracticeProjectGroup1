@@ -1,0 +1,7 @@
+Flask
+Flask-Cors
+peewee
+passlib
+PyJWT
+psycopg2-binary
+python-dotenv
