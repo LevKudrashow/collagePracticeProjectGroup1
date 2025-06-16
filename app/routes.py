@@ -2,7 +2,7 @@ from flask import request, jsonify
 from passlib.hash import pbkdf2_sha256 as hash_handler
 import jwt
 from datetime import datetime, timedelta
-from app.models import User, RefreshToken
+from app.models import User, RefreshToken #from models import User, RefreshToken
 import os
 
 SECRET_KEY = os.getenv('SECRET_KEY')
