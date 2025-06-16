@@ -4,13 +4,11 @@ import locale
 from dotenv import load_dotenv
 from peewee import PostgresqlDatabase
 
-
 print(f"Python encoding: {sys.getdefaultencoding()}")
 print(f"Preferred encoding: {locale.getpreferredencoding()}")
 
-
 try:
-    from app.models import User, RefreshToken
+    from app import models
 except ImportError as e:
     print("Ошибка импорта моделей:", e)
     sys.exit(1)
@@ -29,16 +27,15 @@ except ValueError:
     print(f"Неверный порт: '{DATABASE_PORT_RAW}'")
     sys.exit(1)
 
-
 DATABASE_PASSWORD = DATABASE_PASSWORD.encode('utf-8', errors='ignore').decode('utf-8')
 
-db = PostgresqlDatabase(
+db = models.db
+db.init(
     DATABASE_NAME,
     user=DATABASE_USER,
     password=DATABASE_PASSWORD,
     host=DATABASE_HOST,
     port=DATABASE_PORT,
-    options=''
 )
 
 print(f"Попытка подключения к {DATABASE_HOST}:{DATABASE_PORT}")
@@ -50,7 +47,22 @@ def init():
             db.connect()
         else:
             print("Соединение с БД открыто, используем существующее")
-        db.create_tables([User, RefreshToken], safe=True)
+
+        db.create_tables([
+            models.User,
+            models.RefreshToken,
+            models.Food,
+            models.MealPlans,
+            models.MealItems,
+            models.UserData,
+            models.LabTest,
+            models.Notification,
+            models.Reminders,
+            models.Pantry,
+            models.DietUser,
+            models.SupportMessages,
+        ], safe=True)
+
         print("Таблицы успешно созданы")
     except Exception as e:
         print("Ошибка подключения к БД:", e)
