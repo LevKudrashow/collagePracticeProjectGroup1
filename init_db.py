@@ -1,15 +1,13 @@
 import os
 import sys
 import locale
+from dotenv import load_dotenv
+from peewee import PostgresqlDatabase
 
-os.environ['PYTHONIOENCODING'] = 'utf-8'
-sys.stdout.reconfigure(encoding='utf-8')
 
 print(f"Python encoding: {sys.getdefaultencoding()}")
 print(f"Preferred encoding: {locale.getpreferredencoding()}")
 
-from dotenv import load_dotenv
-from peewee import PostgresqlDatabase
 
 try:
     from app.models import User, RefreshToken
@@ -31,11 +29,6 @@ except ValueError:
     print(f"Неверный порт: '{DATABASE_PORT_RAW}'")
     sys.exit(1)
 
-print(f"DB_NAME: '{DATABASE_NAME}'")
-print(f"DB_USER: '{DATABASE_USER}'")
-print(f"DB_PASSWORD: '{'*' * len(DATABASE_PASSWORD)}'")
-print(f"DB_HOST: '{DATABASE_HOST}'")
-print(f"DB_PORT: '{DATABASE_PORT}'")
 
 DATABASE_PASSWORD = DATABASE_PASSWORD.encode('utf-8', errors='ignore').decode('utf-8')
 
@@ -56,7 +49,7 @@ def init():
         if db.is_closed():
             db.connect()
         else:
-            print("Соединение с БД уже открыто, используем существующее")
+            print("Соединение с БД открыто, используем существующее")
         db.create_tables([User, RefreshToken], safe=True)
         print("Таблицы успешно созданы")
     except Exception as e:
