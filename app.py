@@ -14,8 +14,9 @@ CORS(app)
 #ниже представлен пример как можно записывать данные из бек-энд части в базу данных
 #Тестовая запись в базу данных(это всего лишь пример для разработчиков)
 if __name__ == '__main__':
+
     #всё уже настроено, просто используй методы из init_db по этому принципу -
-    user = db.create_user(nickname='testuser222', password='secret1233')
+    user = db.create_user(nickname='testuser', password='secret1233')
     food = db.add_food(
         name='гречка',
         category='крупы',
@@ -37,6 +38,6 @@ if __name__ == '__main__':
     print(f"План питания: {plan.type}")
 
 register_blueprints(app)
-
 if __name__ == '__main__':
-    app.run(debug=False)
+    if __name__ == '__main__':
+        app.run(host='0.0.0.0', port=5000, debug=False)
